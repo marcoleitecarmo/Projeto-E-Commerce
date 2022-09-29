@@ -10,8 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 from pathlib import Path
-
-from decouple import config
 from django.contrib.messages import constants
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = 'django-insecure-s0f_--(wr$3+@gc!e3vnaohdeu1e=fs2&-8ld2yuwu2+l)%e90'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,17 +32,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'pedido.apps.PedidoConfig',
-    'perfil.apps.PerfilConfig',
-    'produto.apps.ProdutoConfig',
+    # 'pedido.apps.PedidoConfig',
+    # 'perfil.apps.PerfilConfig',
+    # 'produto.apps.ProdutoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #  TODO: remove debug_toolbar
-    'debug_toolbar',
+
     ]
 
 MIDDLEWARE = [
@@ -55,8 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #  TODO: remove debug_toolbar
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
+     
 ]
 
 ROOT_URLCONF = 'loja.urls'
@@ -64,7 +61,7 @@ ROOT_URLCONF = 'loja.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS':  [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,9 +123,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'templates/static'
+STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / 'templates/static'
     ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -141,13 +138,8 @@ MESSAGE_TAGS = {
     constants.INFO: 'alert-info',
 }
 
-#  TODO: remove debug_toolbar
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
 
 
-#  TODO: remove debug_toolbar
 # Sessão em dias: 60s * 60m * 24h * 1d
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
 
