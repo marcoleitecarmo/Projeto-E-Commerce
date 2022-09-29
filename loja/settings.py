@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 from pathlib import Path
+from decouple import config
 from django.contrib.messages import constants
+
+# from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,10 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = 'django-insecure-s0f_--(wr$3+@gc!e3vnaohdeu1e=fs2&-8ld2yuwu2+l)%e90'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -32,9 +36,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 'pedido.apps.PedidoConfig',
-    # 'perfil.apps.PerfilConfig',
-    # 'produto.apps.ProdutoConfig',
+    'pedido.apps.PedidoConfig',
+    'perfil.apps.PerfilConfig',
+    'produto.apps.ProdutoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -137,7 +141,6 @@ MESSAGE_TAGS = {
     constants.SUCCESS: 'alert-success',
     constants.INFO: 'alert-info',
 }
-
 
 
 # Sessão em dias: 60s * 60m * 24h * 1d
