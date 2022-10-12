@@ -1,8 +1,9 @@
-from tabnanny import verbose
-from django.db import models
-from PIL import Image
+from dataclasses import replace
 import os
 from django.conf import settings
+from django.db import models
+from django.utils.text import slugify
+from PIL import Image
 
 
 class Produto(models.Model):
@@ -23,7 +24,13 @@ class Produto(models.Model):
             ('S', 'Simples'),
         )
     )
+  
+    def preco(self):
+        return f'R$ {self.preco_marketing:.2f}'.replace('.', ',')
 
+    def promo(self):
+        return f'R$ {self.preco_marketing_promocional:.2f}'.replace('.', ',')
+            
     @staticmethod
     def resize_image(img, new_width=800):
         img_full_path = os.path.join(settings.MEDIA_ROOT, img.name)
@@ -44,6 +51,9 @@ class Produto(models.Model):
         )
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = f'{slugify(self.nome)}'
+            self.slug = slug
         super().save(*args, **kwargs)
 
         max_image_size = 800
@@ -67,4 +77,4 @@ class Variacao(models.Model):
 
     class Meta:
         verbose_name = 'Variação'
-        verbose_name_plural = 'Variações' 
+        verbose_name_plural = 'Variações'
