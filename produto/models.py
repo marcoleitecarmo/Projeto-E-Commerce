@@ -1,9 +1,9 @@
-from dataclasses import replace
-import os
 from django.conf import settings
+import os
+from PIL import Image
 from django.db import models
 from django.utils.text import slugify
-from PIL import Image
+from utils import utils
 
 
 class Produto(models.Model):
@@ -24,13 +24,15 @@ class Produto(models.Model):
             ('S', 'Simples'),
         )
     )
-  
-    def preco(self):
-        return f'R$ {self.preco_marketing:.2f}'.replace('.', ',')
 
-    def promo(self):
-        return f'R$ {self.preco_marketing_promocional:.2f}'.replace('.', ',')
-            
+    def get_preco_formatado(self):
+        return utils.formata_preco(self.preco_marketing)
+    get_preco_formatado.short_description = 'Preço'
+
+    def get_preco_promocional_formatado(self):
+        return utils.formata_preco(self.preco_marketing_promocional)
+    get_preco_promocional_formatado.short_description = 'Preço Promo.'
+
     @staticmethod
     def resize_image(img, new_width=800):
         img_full_path = os.path.join(settings.MEDIA_ROOT, img.name)
@@ -54,6 +56,7 @@ class Produto(models.Model):
         if not self.slug:
             slug = f'{slugify(self.nome)}'
             self.slug = slug
+
         super().save(*args, **kwargs)
 
         max_image_size = 800
@@ -61,7 +64,7 @@ class Produto(models.Model):
         if self.imagem:
             self.resize_image(self.imagem, max_image_size)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.nome
 
 
@@ -72,7 +75,7 @@ class Variacao(models.Model):
     preco_promocional = models.FloatField(default=0)
     estoque = models.PositiveIntegerField(default=1)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.nome or self.produto.nome
 
     class Meta:
