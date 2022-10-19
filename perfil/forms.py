@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+
 from . import models
 
 
@@ -37,6 +38,8 @@ class UserForm(forms.ModelForm):
         data = self.data
         cleaned = self.cleaned_data
         validation_error_msgs = {}
+
+        usuario_data = data['username']
 
         usuario_data = cleaned.get('username')
         email_data = cleaned.get('email')
