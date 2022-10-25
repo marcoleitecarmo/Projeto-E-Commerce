@@ -10,7 +10,7 @@
         <h2>Resumo da sua compra</h2>
 
         <p class="lead">Dados do usuário</p>
-        <p>Caso precise editar, <a href="{% url 'perfil:criar' %}">clique aqui</a></p>
+        <p>Caso precise alterar, <a href="{% url 'perfil:criar' %}">clique aqui</a></p>
         <dl class="row">
             <dt class="col-lg-2">Nome:</dt>
             <dd class="col-lg-4">{{ usuario.first_name }}</dd>
@@ -29,7 +29,7 @@
         </dl>
 
         <p class="lead">Dados de endereço</p>
-        <p>Caso precise editar, <a href="{% url 'perfil:criar' %}">clique aqui</a></p>
+        <p>Caso precise alterar, <a href="{% url 'perfil:criar' %}">clique aqui</a></p>
         <dl class="row">
             <dt class="col-lg-2">Endereço:</dt>
             <dd class="col-lg-4">{{ usuario.perfil.endereco }}</dd>
