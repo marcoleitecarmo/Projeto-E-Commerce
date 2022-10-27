@@ -47,7 +47,7 @@
                         {% else %}
                         {{ linha.preco|formata_preco }}
                         {% endif %}
-                    </td>
+                    </td
                 </tr>
                 {% endfor %}
 
